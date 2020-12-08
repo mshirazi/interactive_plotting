@@ -684,7 +684,7 @@ def gene_trend(adata, paths, genes=None, mode='gp', exp_key='X',
                extra_genes=[], n_points=100, show_zero_counts=True,
                time_span=[None, None], use_raw=True,
                n_velocity_genes=5, length_scale=0.2,
-               path_key='louvain', color_key='louvain',
+               path_key='leiden', color_key='leiden',
                share_y=True, legend_loc='top_right',
                plot_width=None, plot_height=None, save=None, **kwargs):
     """
@@ -724,9 +724,9 @@ def gene_trend(adata, paths, genes=None, mode='gp', exp_key='X',
         number of genes to take from` adata.var['velocity_genes']`
     length_scale : float, optional (default `0.2`)
         length scale for RBF kernel
-    path_key: str, optional (default: `'louvain'`)
+    path_key: str, optional (default: `'leiden'`)
         key in `adata.obs_keys()` where to look for groups specified in `paths` argument
-    color_key: str, optional (default: `'louvain'`)
+    color_key: str, optional (default: `'leiden'`)
         key in `adata.obs_keys()` which is color in plot
     share_y: bool, optional (default: `True`)
         whether to share y-axis when plotting paths separately
@@ -960,7 +960,7 @@ def highlight_de(adata, basis='umap', components=[1, 2], n_top_genes=10,
             continue
 
         # must use 'group' instead of key since key is MultiIndex
-        conv_hulls.rename(columns={'louvain': 'group'}, inplace=True)
+        conv_hulls.rename(columns={'leiden': 'group'}, inplace=True)
         xs, ys, ks = zip(*conv_hulls.groupby('group').apply(lambda df: list(map(list, (df['x'], df['y'], df['group'])))))
         tmp_data = defaultdict(list)
         tmp_data['xs'] = xs
